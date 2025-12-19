@@ -1,6 +1,23 @@
 {
   "name": "yt-dlp-command-builder",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
-  "main": "index.ts"
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "pnpm build"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
 }

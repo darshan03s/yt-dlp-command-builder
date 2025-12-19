@@ -1,2 +1,2 @@
 export * from './ytdlpCommandBuilder';
-export * from './types'
+export * from './types';
