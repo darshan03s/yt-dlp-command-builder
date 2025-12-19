@@ -1,4 +1,3 @@
-// types.ts
 export type JsRuntime = 'deno' | 'node' | 'quickjs' | 'bun';
 
 export interface YtdlpCommandBuilderConstructorOptions {

@@ -1,4 +1,3 @@
-// ytdlpCommandBuilder.ts
 import {
   AudioFormat,
   DownloaderName,
