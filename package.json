@@ -2,5 +2,5 @@
   "name": "yt-dlp-command-builder",
   "version": "0.0.0",
   "type": "module",
-  "main": "main.ts"
+  "main": "index.ts"
 }
