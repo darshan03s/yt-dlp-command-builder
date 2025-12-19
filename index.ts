@@ -42,7 +42,7 @@ export class YtdlpCommandBuilder {
    */
   build() {
     this.combine();
-    return this.completeCommand;
+    return this.completeCommand.trim();
   }
 
   /**
@@ -59,9 +59,9 @@ export class YtdlpCommandBuilder {
   get() {
     this.combine();
     return {
-      baseCommand: this.ytdlpCommandOrPath,
+      baseCommand: this.ytdlpCommandOrPath.trim(),
       args: this.args,
-      completeCommand: this.completeCommand
+      completeCommand: this.completeCommand.trim()
     };
   }
 
