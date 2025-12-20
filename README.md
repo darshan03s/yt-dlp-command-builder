@@ -65,7 +65,7 @@ const command = new YtdlpCommandBuilder('/usr/local/bin/yt-dlp')
 
 ```typescript
 const command = new YtdlpCommandBuilder()
-  .url('URL')
+  .url('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
   .downloadSections({ start: '00:01:00', end: '00:02:00' })
   .matchFilters('duration > 60 & like_count > 100')
   .concurrentFragments(5)
