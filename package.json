@@ -11,6 +11,10 @@
     "command-builder",
     "typescript"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darshan03s/yt-dlp-command-builder"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

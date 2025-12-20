@@ -81,7 +81,10 @@ You can easily use the output of the builder with `child_process`:
 import { exec } from 'child_process';
 import { YtdlpCommandBuilder } from 'yt-dlp-command-builder';
 
-const { baseCommand, args, completeCommand } = new YtdlpCommandBuilder().url('').dumpJson().get();
+const { baseCommand, args, completeCommand } = new YtdlpCommandBuilder()
+  .url('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+  .dumpJson()
+  .get();
 
 exec(completeCommand, (error, stdout, stderr) => {
   const info = JSON.parse(stdout);
