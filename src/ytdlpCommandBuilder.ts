@@ -1380,12 +1380,24 @@ export class YtdlpCommandBuilder {
    * @param regex The regular expression for chapters or a time-range prefixed with "*".
    * @returns The current instance of YtdlpCommandBuilder.
    */
-  downloadSections(regex: string) {
-    if (!regex || !regex.trim()) {
-      throw new Error('Download section regex/range must be provided');
-    }
+  downloadSections(regex: string): this;
+  downloadSections(range: { start?: string; end?: string }): this;
+  downloadSections(arg: string | { start?: string; end?: string }) {
     this.add('--download-sections');
-    this.add(regex);
+
+    if (typeof arg === 'string') {
+      if (!arg.trim()) {
+        throw new Error('Regex must be provided');
+      }
+      this.add(arg.trim());
+    } else {
+      const { start, end } = arg;
+      if (!start && !end) {
+        throw new Error('Range must include start and/or end');
+      }
+      this.add(start && end ? `*${start}-${end}` : start ? `*${start}-inf` : `*00:00:00-${end}`);
+    }
+
     return this;
   }
 

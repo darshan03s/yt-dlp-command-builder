@@ -357,3 +357,107 @@ test('get: yt-dlp path, js runtime custom with path, ffmpeg location, cookies br
   console.log(get);
   expect(get).toStrictEqual(toBe);
 });
+
+test('download sections intro', () => {
+  const command = new YtdlpCommandBuilder(YTDLP_PATH)
+    .jsRuntime('quickjs', JS_RUNTIME_PATH)
+    .ffmpegLocation(FFMPEG_PATH)
+    .cookiesFromBrowser(COOKIES_BROWSER, { profile: COOKIES_BROWSER_PROFILE })
+    .loadInfoJson(INFO_JSON_PATH)
+    .downloadSections('intro');
+  const toBe = `${YTDLP_PATH} --js-runtimes quickjs:${JS_RUNTIME_PATH} --ffmpeg-location ${FFMPEG_PATH} --cookies-from-browser ${COOKIES_BROWSER}:${COOKIES_BROWSER_PROFILE} --load-info-json ${INFO_JSON_PATH} --download-sections intro`;
+  const build = command.build();
+  console.log(build);
+  expect(build).toBe(toBe);
+});
+
+test('download sections Chapter One', () => {
+  const command = new YtdlpCommandBuilder(YTDLP_PATH)
+    .jsRuntime('quickjs', JS_RUNTIME_PATH)
+    .ffmpegLocation(FFMPEG_PATH)
+    .cookiesFromBrowser(COOKIES_BROWSER, { profile: COOKIES_BROWSER_PROFILE })
+    .loadInfoJson(INFO_JSON_PATH)
+    .downloadSections('Chapter One');
+  const toBe = `${YTDLP_PATH} --js-runtimes quickjs:${JS_RUNTIME_PATH} --ffmpeg-location ${FFMPEG_PATH} --cookies-from-browser ${COOKIES_BROWSER}:${COOKIES_BROWSER_PROFILE} --load-info-json ${INFO_JSON_PATH} --download-sections Chapter One`;
+  const build = command.build();
+  console.log(build);
+  expect(build).toBe(toBe);
+});
+
+test('download sections range string', () => {
+  const command = new YtdlpCommandBuilder(YTDLP_PATH)
+    .jsRuntime('quickjs', JS_RUNTIME_PATH)
+    .ffmpegLocation(FFMPEG_PATH)
+    .cookiesFromBrowser(COOKIES_BROWSER, { profile: COOKIES_BROWSER_PROFILE })
+    .loadInfoJson(INFO_JSON_PATH)
+    .downloadSections('*00:00-00:30');
+  const toBe = `${YTDLP_PATH} --js-runtimes quickjs:${JS_RUNTIME_PATH} --ffmpeg-location ${FFMPEG_PATH} --cookies-from-browser ${COOKIES_BROWSER}:${COOKIES_BROWSER_PROFILE} --load-info-json ${INFO_JSON_PATH} --download-sections *00:00-00:30`;
+  const build = command.build();
+  console.log(build);
+  expect(build).toBe(toBe);
+});
+
+test('download sections range object, start only', () => {
+  const command = new YtdlpCommandBuilder(YTDLP_PATH)
+    .jsRuntime('quickjs', JS_RUNTIME_PATH)
+    .ffmpegLocation(FFMPEG_PATH)
+    .cookiesFromBrowser(COOKIES_BROWSER, { profile: COOKIES_BROWSER_PROFILE })
+    .loadInfoJson(INFO_JSON_PATH)
+    .downloadSections({ start: '00:00' });
+  const toBe = `${YTDLP_PATH} --js-runtimes quickjs:${JS_RUNTIME_PATH} --ffmpeg-location ${FFMPEG_PATH} --cookies-from-browser ${COOKIES_BROWSER}:${COOKIES_BROWSER_PROFILE} --load-info-json ${INFO_JSON_PATH} --download-sections *00:00-inf`;
+  const build = command.build();
+  console.log(build);
+  expect(build).toBe(toBe);
+});
+
+test('download sections range object, end only', () => {
+  const command = new YtdlpCommandBuilder(YTDLP_PATH)
+    .jsRuntime('quickjs', JS_RUNTIME_PATH)
+    .ffmpegLocation(FFMPEG_PATH)
+    .cookiesFromBrowser(COOKIES_BROWSER, { profile: COOKIES_BROWSER_PROFILE })
+    .loadInfoJson(INFO_JSON_PATH)
+    .downloadSections({ end: '00:30' });
+  const toBe = `${YTDLP_PATH} --js-runtimes quickjs:${JS_RUNTIME_PATH} --ffmpeg-location ${FFMPEG_PATH} --cookies-from-browser ${COOKIES_BROWSER}:${COOKIES_BROWSER_PROFILE} --load-info-json ${INFO_JSON_PATH} --download-sections *00:00:00-00:30`;
+  const build = command.build();
+  console.log(build);
+  expect(build).toBe(toBe);
+});
+
+test('download sections range object, start and end', () => {
+  const command = new YtdlpCommandBuilder(YTDLP_PATH)
+    .jsRuntime('quickjs', JS_RUNTIME_PATH)
+    .ffmpegLocation(FFMPEG_PATH)
+    .cookiesFromBrowser(COOKIES_BROWSER, { profile: COOKIES_BROWSER_PROFILE })
+    .loadInfoJson(INFO_JSON_PATH)
+    .downloadSections({ start: '00:00', end: '00:30' });
+  const toBe = `${YTDLP_PATH} --js-runtimes quickjs:${JS_RUNTIME_PATH} --ffmpeg-location ${FFMPEG_PATH} --cookies-from-browser ${COOKIES_BROWSER}:${COOKIES_BROWSER_PROFILE} --load-info-json ${INFO_JSON_PATH} --download-sections *00:00-00:30`;
+  const build = command.build();
+  console.log(build);
+  expect(build).toBe(toBe);
+});
+
+test('wait for video', () => {
+  const command = new YtdlpCommandBuilder(YTDLP_PATH)
+    .jsRuntime('quickjs', JS_RUNTIME_PATH)
+    .ffmpegLocation(FFMPEG_PATH)
+    .cookiesFromBrowser(COOKIES_BROWSER, { profile: COOKIES_BROWSER_PROFILE })
+    .loadInfoJson(INFO_JSON_PATH)
+    .waitForVideo('60-600');
+  const toBe = `${YTDLP_PATH} --js-runtimes quickjs:${JS_RUNTIME_PATH} --ffmpeg-location ${FFMPEG_PATH} --cookies-from-browser ${COOKIES_BROWSER}:${COOKIES_BROWSER_PROFILE} --load-info-json ${INFO_JSON_PATH} --wait-for-video 60-600`;
+  const build = command.build();
+  console.log(build);
+  expect(build).toBe(toBe);
+});
+
+test('print filepath', () => {
+  const command = new YtdlpCommandBuilder(YTDLP_PATH)
+    .jsRuntime('quickjs', JS_RUNTIME_PATH)
+    .ffmpegLocation(FFMPEG_PATH)
+    .cookiesFromBrowser(COOKIES_BROWSER, { profile: COOKIES_BROWSER_PROFILE })
+    .loadInfoJson(INFO_JSON_PATH)
+    .print('filepath', 'after_move');
+  const toBe = `${YTDLP_PATH} --js-runtimes quickjs:${JS_RUNTIME_PATH} --ffmpeg-location ${FFMPEG_PATH} --cookies-from-browser ${COOKIES_BROWSER}:${COOKIES_BROWSER_PROFILE} --load-info-json ${INFO_JSON_PATH} --print after_move:filepath`;
+  const build = command.build();
+  console.log(build);
+  expect(build).toBe(toBe);
+});
