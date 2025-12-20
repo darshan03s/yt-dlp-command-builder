@@ -441,9 +441,9 @@ test('wait for video', () => {
     .jsRuntime('quickjs', JS_RUNTIME_PATH)
     .ffmpegLocation(FFMPEG_PATH)
     .cookiesFromBrowser(COOKIES_BROWSER, { profile: COOKIES_BROWSER_PROFILE })
-    .loadInfoJson(INFO_JSON_PATH)
+    .url(URL)
     .waitForVideo('60-600');
-  const toBe = `${YTDLP_PATH} --js-runtimes quickjs:${JS_RUNTIME_PATH} --ffmpeg-location ${FFMPEG_PATH} --cookies-from-browser ${COOKIES_BROWSER}:${COOKIES_BROWSER_PROFILE} --load-info-json ${INFO_JSON_PATH} --wait-for-video 60-600`;
+  const toBe = `${YTDLP_PATH} --js-runtimes quickjs:${JS_RUNTIME_PATH} --ffmpeg-location ${FFMPEG_PATH} --cookies-from-browser ${COOKIES_BROWSER}:${COOKIES_BROWSER_PROFILE} ${URL} --wait-for-video 60-600`;
   const build = command.build();
   console.log(build);
   expect(build).toBe(toBe);
