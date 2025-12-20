@@ -4,6 +4,7 @@ import {
   DownloaderProtocol,
   JsRuntime,
   Keyring,
+  MergeOutputFormat,
   PathType,
   PostProcessorExecutable,
   PostProcessorName,
@@ -14,8 +15,7 @@ import {
   RemoteComponent,
   RetryType,
   SponsorBlockCategory,
-  SupportedCookieBrowser,
-  YtdlpCommandBuilderConstructorOptions
+  SupportedCookieBrowser
 } from './types';
 
 export class YtdlpCommandBuilder {
@@ -26,10 +26,10 @@ export class YtdlpCommandBuilder {
 
   /**
    * Initializes a new instance of the YtdlpCommandBuilder class.
-   * @param options Configuration options for the command builder.
+   * @param ytdlpPath Path to yt-dlp
    */
-  constructor(options: YtdlpCommandBuilderConstructorOptions = {}) {
-    this.ytdlpCommandOrPath = options.ytdlpPath ?? 'yt-dlp';
+  constructor(ytdlpPath?: string) {
+    this.ytdlpCommandOrPath = ytdlpPath ?? 'yt-dlp';
 
     this.methodCalled = new Map();
 
@@ -104,23 +104,29 @@ export class YtdlpCommandBuilder {
 
   /**
    * Print this help text and exit
+   * @return The current instance of YtdlpCommandBuilder.
    */
   help() {
-    this.add('--help');
+    this.once('help', '--help');
+    return this;
   }
 
   /**
    * Print program version and exit
+   * @return The current instance of YtdlpCommandBuilder.
    */
   version() {
-    this.add('--version');
+    this.once('version', '--version');
+    return this;
   }
 
   /**
    * Update this program to the latest version
+   * @return The current instance of YtdlpCommandBuilder.
    */
   update() {
-    this.add('--update');
+    this.once('update', '--update');
+    return this;
   }
 
   /**
@@ -128,7 +134,7 @@ export class YtdlpCommandBuilder {
    * @returns The current instance of YtdlpCommandBuilder.
    */
   noUpdate() {
-    this.add('--no-update');
+    this.once('noUpdate', '--no-update');
     return this;
   }
 
@@ -136,14 +142,18 @@ export class YtdlpCommandBuilder {
    * Upgrade/downgrade to a specific version. CHANNEL can be a repository as well. CHANNEL and TAG default to "stable" and "latest" respectively if omitted; See "UPDATE" for details in the yt-dlp README. Supported channels: stable, nightly, master
    * @param channel Channel to update to from 'stable' | 'nightly' | 'master'. Defaults to 'stable'.
    * @param tag Tag to update to. Defaults to 'latest'.
+   * @returns The current instance of YtdlpCommandBuilder.
    */
   updateTo(channel: ReleaseChannel = 'stable', tag: 'latest' | string = 'latest') {
     if (!channel) {
       throw new Error('Channel was not provided');
     }
 
+    this.isCalled('updateTo');
     this.add('--update-to');
     this.add(`${channel}@${tag}`);
+    this.called('updateTo');
+    return this;
   }
 
   /**
@@ -2428,10 +2438,13 @@ export class YtdlpCommandBuilder {
    * @param format Container format(s) separated by "/".
    * @returns The current instance of YtdlpCommandBuilder.
    */
+  mergeOutputFormat(format: MergeOutputFormat): this;
+  mergeOutputFormat(format: string): this;
   mergeOutputFormat(format: string) {
-    if (!format || !format.trim()) {
+    if (!format.trim()) {
       throw new Error('Merge output format must be provided');
     }
+
     this.once('mergeOutputFormat', '--merge-output-format');
     this.add(format);
     return this;

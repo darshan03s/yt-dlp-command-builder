@@ -1,9 +1,5 @@
 export type JsRuntime = 'deno' | 'node' | 'quickjs' | 'bun';
 
-export interface YtdlpCommandBuilderConstructorOptions {
-  ytdlpPath?: string;
-}
-
 export const SUPPORTED_COOKIE_BROWSERS = [
   'brave',
   'chrome',
@@ -117,3 +113,5 @@ export type SponsorBlockCategory =
   | 'chapter'
   | 'all'
   | 'default';
+
+export type MergeOutputFormat = 'avi' | 'flv' | 'mkv' | 'mov' | 'mp4' | 'webm';
